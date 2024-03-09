@@ -1,19 +1,46 @@
 package org.example
 
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse.BodyHandlers
+import org.example.game.FactoryGame
+import java.util.*
 
-//TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
-// click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
 fun main() {
-    val client: HttpClient = HttpClient.newHttpClient();
-    val request = HttpRequest.newBuilder()
-        .uri(URI.create("https://www.cheapshark.com/api/1.0/games?id=146"))
-        .build()
-    val response = client.send(request, BodyHandlers.ofString())
-    val json = response.body()
-    println(json)
-
+    val sc = Scanner(System.`in`)
+    print("Digite o id do jogo: ")
+    val keyGame = runCatching {
+        sc.nextInt()
     }
+
+    keyGame.onFailure {
+        println("O id deve ser um número inteiro!")
+    }
+
+    keyGame.onSuccess {
+        val idGame = keyGame.getOrNull()
+        if (idGame != null) {
+            val game = runCatching {
+                FactoryGame().createByApiShark(idGame, null)
+            }
+
+            game.onSuccess {
+                val gameSuccess = game.getOrNull()
+                if (gameSuccess != null) {
+                    println("Você deseja adicionar uma descrição personalizada para o jogo: ${gameSuccess.titulo}")
+                    sc.nextLine()
+
+                    //Verificando se o usuário quer digitar um título personalizado
+                    val op =  sc.nextLine()
+                    if(op.equals("s", true) || op.equals("sim", true)){
+                        println("Digite a descrição que quer: ")
+                        val descriptor = sc.nextLine()
+                        gameSuccess.descricao = descriptor
+                    }
+                    println("----Dados do Jogo----\n")
+                    println(gameSuccess)
+                }
+            }
+            game.onFailure {
+                println("O jogo procurado não existe!")
+            }
+        }
+    }
+}
