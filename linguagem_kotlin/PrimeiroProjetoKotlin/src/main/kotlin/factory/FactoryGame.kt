@@ -1,6 +1,8 @@
-package org.example.game
+package org.example.factory
 
 import com.google.gson.Gson
+import org.example.game.Game
+import org.example.game.InfoGame
 import java.net.URI
 import java.net.http.HttpClient
 import java.net.http.HttpRequest

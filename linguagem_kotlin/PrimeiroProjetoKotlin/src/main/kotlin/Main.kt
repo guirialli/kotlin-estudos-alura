@@ -1,6 +1,6 @@
 package org.example
 
-import org.example.game.FactoryGame
+import org.example.factory.FactoryGame
 import java.util.*
 
 fun main() {
