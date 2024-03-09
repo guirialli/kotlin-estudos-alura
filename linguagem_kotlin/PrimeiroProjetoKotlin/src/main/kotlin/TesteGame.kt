@@ -14,5 +14,5 @@ fun main() {
 
     println(gamer1)
     println(gamer2)
-    println(gamer2.getIdInterno())
+    println(gamer2.idIterno)
 }

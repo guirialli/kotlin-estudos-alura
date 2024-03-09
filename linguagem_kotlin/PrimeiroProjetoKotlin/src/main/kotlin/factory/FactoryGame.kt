@@ -9,6 +9,8 @@ import java.net.http.HttpRequest
 import java.net.http.HttpResponse
 
 class FactoryGame {
+
+    companion object{
     fun createByApiShark(idGame: Int, descricao: String?): Game {
         val endereco = "https://www.cheapshark.com/api/1.0/games?id=${idGame}"
         val client: HttpClient = HttpClient.newHttpClient()
@@ -31,5 +33,6 @@ class FactoryGame {
             Game(titulo = info.title, capa = info.thumb)
         return meuJogo
 
+    }
     }
 }
