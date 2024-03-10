@@ -1,14 +1,15 @@
 package org.example.principal
 
 import factory.FactoryGame
-import org.example.game.Game
+import factory.FactoryGamer
+import game.Game
 import org.example.usuario.Gamer
 import java.util.*
 
 fun main() {
     val sc = Scanner(System.`in`)
     var continuar: String
-    val gamer = Gamer.creatGame(sc)
+    val gamer =  FactoryGamer.createByCommandLine(sc)
 
     do {
         print("Digite o id do jogo: ")
@@ -19,6 +20,7 @@ fun main() {
 
         keyGame.onFailure {
             println("O id deve ser um número inteiro!")
+            println(it.message)
         }
 
         keyGame.onSuccess {

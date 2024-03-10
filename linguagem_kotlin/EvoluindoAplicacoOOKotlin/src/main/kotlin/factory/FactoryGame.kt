@@ -1,13 +1,9 @@
 package factory
 
 import com.google.gson.Gson
-import org.example.game.Game
+import game.Game
 import org.example.game.InfoGame
 import servico.ConsumoAPI
-import java.net.URI
-import java.net.http.HttpClient
-import java.net.http.HttpRequest
-import java.net.http.HttpResponse
 
 class FactoryGame {
 
@@ -22,10 +18,11 @@ class FactoryGame {
 
             // desestruturando o info
             val info = meuInfoJogo.info
+            val price = meuInfoJogo.cheapestPriceEver.price
             val meuJogo = if (descricao != null) {
-                Game(titulo = info.title, capa = info.thumb, descricao = descricao)
+                Game(titulo = info.title, capa = info.thumb, descricao = descricao, preco = price.toDouble())
             } else
-                Game(titulo = info.title, capa = info.thumb)
+                Game(titulo = info.title, capa = info.thumb, preco = price.toDouble())
             return meuJogo
         }
     }
