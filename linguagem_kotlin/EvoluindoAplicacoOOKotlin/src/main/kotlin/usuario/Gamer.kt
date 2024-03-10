@@ -33,7 +33,7 @@ class Gamer(
     }
 
     override fun toString(): String {
-        return "Gamer(nome = '${nome}', email='${email}', dataNascimento=${dataNascimento}, ususario='${usuario}'idInterno='${idIterno}'"
+        return "Gamer(nome = '${nome}', email='${email}', dataNascimento=${dataNascimento}, ususario='${usuario}'idInterno='${idIterno}'\n"
     }
 
     companion object{

@@ -1,6 +1,6 @@
-package org.example
+package org.example.principal
 
-import org.example.factory.FactoryGame
+import factory.FactoryGame
 import org.example.game.Game
 import org.example.usuario.Gamer
 import java.util.*
