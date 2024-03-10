@@ -23,7 +23,7 @@ class PlanoAssinatura(
         val totalJogos = aluguel.gamer.jogosNoMes(aluguel.periodo.dataInicial).size
 
         return if (jogosIncluidos > totalJogos) 0.0
-        else PlanoServices.calcularValorDoJogo(aluguel) - (PlanoServices.calcularValorDoJogo(aluguel) * desconto)
+        else calcularValorDoJogo(aluguel) - (calcularValorDoJogo(aluguel) * desconto)
     }
 
     override fun toString(): String {

@@ -5,6 +5,7 @@ import modelo.aluguel.PeriodoAluguel
 import modelo.game.Game
 import modelo.planos.Plano
 import modelo.planos.PlanoAvulso
+import modelo.planos.servicos.recomendacao.Recomendavel
 import java.time.LocalDate
 import java.util.*
 class Gamer(
@@ -12,12 +13,15 @@ class Gamer(
     var email: String,
     var dataNascimento: String? = null,
     var usuario: String? = null
-) {
+) : Recomendavel {
     var idIterno: String = UUID.randomUUID().toString()
         private set
     val gamesSearched: MutableList<Game?> = mutableListOf()
     val listDeAlugueis: MutableList<Aluguel?> = mutableListOf()
     var plano : Plano = PlanoAvulso()
+    private var listaNotas = mutableListOf<Int>()
+    override val media: Double
+        get() = listaNotas.average()
 
     init {
         if (nome.isBlank())
@@ -66,8 +70,13 @@ class Gamer(
         return aluguel
     }
 
+    override fun recomendar(nota: Int) {
+        listaNotas.add(nota)
+    }
+
     override fun toString(): String {
-        return "Gamer(nome = '${nome}', email='${email}', dataNascimento=${dataNascimento}, ususario='${usuario}'idInterno='${idIterno}'\n"
+        return "Gamer(nome = '${nome}', email='${email}'," +
+                " dataNascimento=${dataNascimento}, ususario='${usuario}'idInterno='${idIterno} Avaliação: ${media}'\n"
     }
 
     companion object{

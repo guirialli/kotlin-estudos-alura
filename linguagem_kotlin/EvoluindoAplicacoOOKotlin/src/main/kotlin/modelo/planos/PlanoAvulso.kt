@@ -8,7 +8,7 @@ class PlanoAvulso : Plano(
 ){
 
     override fun calcularAluguel(aluguel: Aluguel): Double {
-        return PlanoServices.calcularValorDoJogo(aluguel)
+        return calcularValorDoJogo(aluguel)
     }
 
 
