@@ -1,10 +1,12 @@
 package principal
 
+import com.google.gson.GsonBuilder
 import factory.FactoryGame
 import factory.FactoryGamer
 import modelo.planos.PlanoAssinatura
 import modelo.usuario.Gamer
 import utilitarios.toBRL
+import java.io.File
 
 fun main() {
     val listaDeGamers = FactoryGamer.createGameByAPI()
@@ -46,6 +48,17 @@ fun main() {
                         "${((valorFinalPlanos(gamer2) ?: 0.0) - (valorFinalPlanos(gamer) ?: 0.0)).toBRL()} " +
                         "alugando mais!"
             )
+
+            // Vamos trabalhar com serialização de algum dado
+            gamer.avaliarJogo(jogo, 10)
+            val gson = GsonBuilder().excludeFieldsWithoutExposeAnnotation().create()
+            val serializacao = gson.toJson(gamer.jogosRecomendados)
+            println("Resultado da serialização:\n$serializacao")
+
+            val arquivo = File("jogosRecomendados-${gamer.nome}.json")
+            arquivo.writeText(serializacao)
+            println(arquivo.absolutePath)
+
         }
     }
 }

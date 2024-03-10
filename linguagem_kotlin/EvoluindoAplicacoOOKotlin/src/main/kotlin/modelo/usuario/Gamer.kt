@@ -5,7 +5,7 @@ import modelo.aluguel.PeriodoAluguel
 import modelo.game.Game
 import modelo.planos.Plano
 import modelo.planos.PlanoAvulso
-import modelo.planos.servicos.recomendacao.Recomendavel
+import modelo.recomendacao.Recomendavel
 import java.time.LocalDate
 import java.util.*
 class Gamer(
@@ -20,6 +20,9 @@ class Gamer(
     val listDeAlugueis: MutableList<Aluguel?> = mutableListOf()
     var plano : Plano = PlanoAvulso()
     private var listaNotas = mutableListOf<Int>()
+    val jogosRecomendados: MutableList<Game> = mutableListOf()
+
+
     override val media: Double
         get() = listaNotas.average()
 
@@ -40,7 +43,7 @@ class Gamer(
             throw IllegalArgumentException("Email invalido!")
     }
 
-    fun alugueisNoMes(dataDoMes: LocalDate): List<Aluguel?>{
+    private fun alugueisNoMes(dataDoMes: LocalDate): List<Aluguel?>{
         val mes = if(dataDoMes.monthValue <= 9) "0${dataDoMes.monthValue}" else dataDoMes.monthValue.toString()
         val ano = dataDoMes.year
         val dataInicio: LocalDate = LocalDate.parse("$ano-$mes-01")
@@ -72,6 +75,11 @@ class Gamer(
 
     override fun recomendar(nota: Int) {
         listaNotas.add(nota)
+    }
+
+    fun avaliarJogo(jogo: Game, nota: Int){
+        jogo.recomendar(nota)
+        jogosRecomendados.add(jogo)
     }
 
     override fun toString(): String {

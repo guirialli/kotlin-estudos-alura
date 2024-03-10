@@ -1,4 +1,4 @@
-package modelo.planos.servicos.recomendacao
+package modelo.recomendacao
 
 interface Recomendavel {
     val media: Double
