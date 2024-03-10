@@ -1,6 +1,6 @@
 package org.example.principal
 
-import org.example.usuario.Gamer
+import modelo.usuario.Gamer
 
 fun main() {
     val gamer1 = Gamer(nome = "Guilherme Rialli Oliveira", email = "gu@gmail.com")

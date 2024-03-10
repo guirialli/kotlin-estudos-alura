@@ -2,7 +2,7 @@ package factory
 
 import com.google.gson.Gson
 import com.google.gson.reflect.TypeToken
-import org.example.usuario.Gamer
+import modelo.usuario.Gamer
 import org.example.usuario.data.InfoGamerJson
 import org.example.utilitarios.tranformarEmIdade
 import servico.ConsumoAPI
@@ -25,7 +25,7 @@ class FactoryGamer {
             return listaGameConvertida
         }
 
-        fun createByCommandLine(sc : Scanner): Gamer{
+        fun createByCommandLine(sc : Scanner): Gamer {
             val gamer : Gamer
             println("Bem vindo, vamos começar com o seu cadastro:")
             println("Informe seu nome completo: ")

@@ -1,4 +1,4 @@
-package game
+package modelo.game
 
 import utilitarios.toBRL
 import java.text.NumberFormat

@@ -1,7 +1,7 @@
 package factory
 
 import com.google.gson.Gson
-import game.Game
+import modelo.game.Game
 import org.example.game.InfoGame
 import servico.ConsumoAPI
 

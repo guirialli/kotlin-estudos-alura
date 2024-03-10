@@ -2,14 +2,13 @@ package org.example.principal
 
 import factory.FactoryGame
 import factory.FactoryGamer
-import game.Game
-import org.example.usuario.Gamer
+import modelo.game.Game
 import java.util.*
 
 fun main() {
     val sc = Scanner(System.`in`)
     var continuar: String
-    val gamer =  FactoryGamer.createByCommandLine(sc)
+    val gamer = FactoryGamer.createByCommandLine(sc)
 
     do {
         print("Digite o id do jogo: ")
@@ -24,34 +23,31 @@ fun main() {
         }
 
         keyGame.onSuccess {
-            val idGame = keyGame.getOrNull()
-            if (idGame != null) {
-                val game = runCatching {
-                    FactoryGame.createByApiShark(idGame, null)
-                }
+            val idGame = it
+            val game = runCatching {
+                FactoryGame.createByApiShark(idGame, null)
+            }
 
-                game.onSuccess {
-                    val gameSuccess = game.getOrNull()
-                    if (gameSuccess != null) {
-                        println("Você deseja adicionar uma descrição personalizada para o jogo: ${gameSuccess.titulo}?")
+            game.onSuccess {
+                val gameSuccess = it
+                println("Você deseja adicionar uma descrição personalizada para o jogo: ${gameSuccess.titulo}?")
 
-                        //Verificando se o usuário quer digitar um título personalizado
-                        val op = sc.nextLine()
-                        if (op.equals("s", true) || op.equals("sim", true)) {
-                            println("Digite a descrição que quer: ")
-                            val descriptor = sc.nextLine()
-                            gameSuccess.descricao = descriptor
-                        }
-                        println("----Dados do Jogo----\n")
-                        println(gameSuccess)
-                        gamer.gamesSearched.add(gameSuccess)
-                    }
+                //Verificando se o usuário quer digitar um título personalizado
+                val op = sc.nextLine()
+                if (op.equals("s", true) || op.equals("sim", true)) {
+                    println("Digite a descrição que quer: ")
+                    val descriptor = sc.nextLine()
+                    gameSuccess.descricao = descriptor
                 }
-                game.onFailure {
-                    println("O jogo procurado não existe!")
-                }
+                println("----Dados do Jogo----\n")
+                println(gameSuccess)
+                gamer.gamesSearched.add(gameSuccess)
+            }
+            game.onFailure {
+                println("O jogo procurado não existe!")
             }
         }
+
         println()
         println("Você deseja buscar outro jogo?")
         continuar = sc.nextLine()

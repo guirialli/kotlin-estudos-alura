@@ -1,13 +1,12 @@
-package org.example.usuario
+package modelo.usuario
 
-import game.Game
-import org.example.utilitarios.tranformarEmIdade
-import servico.aluguel.Aluguel
-import servico.aluguel.PeriodoAluguel
+import modelo.aluguel.Aluguel
+import modelo.aluguel.PeriodoAluguel
+import modelo.game.Game
+import modelo.planos.Plano
+import modelo.planos.PlanoAvulso
 import java.time.LocalDate
-import java.util.Scanner
-import java.util.UUID
-
+import java.util.*
 class Gamer(
     var nome: String,
     var email: String,
@@ -18,6 +17,7 @@ class Gamer(
         private set
     val gamesSearched: MutableList<Game?> = mutableListOf()
     val listDeAlugueis: MutableList<Aluguel?> = mutableListOf()
+    var plano : Plano = PlanoAvulso()
 
     init {
         if (nome.isBlank())
@@ -36,8 +36,25 @@ class Gamer(
             throw IllegalArgumentException("Email invalido!")
     }
 
-    fun alugarJogo(jogo:Game, diasDeAluguel: Long): Aluguel{
-        val aluguel : Aluguel = Aluguel(
+    fun alugueisNoMes(dataDoMes: LocalDate): List<Aluguel?>{
+        val mes = if(dataDoMes.monthValue <= 9) "0${dataDoMes.monthValue}" else dataDoMes.monthValue.toString()
+        val ano = dataDoMes.year
+        val dataInicio: LocalDate = LocalDate.parse("$ano-$mes-01")
+        val dataFinal = dataInicio.plusMonths(1)
+        val listaDeAlugueisFiltrada = listDeAlugueis.filter {
+            (dataDoMes.isAfter(dataInicio) || dataDoMes.isEqual(dataInicio)) &&
+                    (dataDoMes.isBefore(dataFinal))
+        }
+        return listaDeAlugueisFiltrada
+    }
+
+    fun jogosNoMes(dataDoMes: LocalDate): List<Game?>{
+        val listaAlugueisFiltrada = alugueisNoMes(dataDoMes)
+        return listaAlugueisFiltrada.map { it?.jogo }
+    }
+
+    fun alugarJogo(jogo: Game, diasDeAluguel: Long): Aluguel {
+        val aluguel = Aluguel(
             jogo = jogo,
             gamer = this,
             periodo = PeriodoAluguel(
