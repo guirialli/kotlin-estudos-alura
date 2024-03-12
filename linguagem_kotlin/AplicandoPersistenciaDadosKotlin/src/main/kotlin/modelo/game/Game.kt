@@ -3,10 +3,12 @@ package modelo.game
 import com.google.gson.annotations.Expose
 import modelo.recomendacao.Recomendavel
 import utilitarios.toBRL
+import kotlin.random.Random
 
 class Game(
     @Expose val titulo: String,
     @Expose val capa: String,
+    @Expose var id: Int = 1,
     val preco: Double,
     var descricao: String? = null,
 ) : Recomendavel{
@@ -19,7 +21,7 @@ class Game(
     }
 
     override fun toString(): String {
-        return "Game: \nTitulo $titulo \nCapa: $capa  \nDescricao: $descricao\nPreço: ${preco.toBRL()} "
+        return "Game${id}: \nTitulo $titulo \nCapa: $capa  \nDescricao: $descricao\nPreço: ${preco.toBRL()} "
     }
 
 }
