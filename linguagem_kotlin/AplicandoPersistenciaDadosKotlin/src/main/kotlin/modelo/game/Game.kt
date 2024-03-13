@@ -3,7 +3,6 @@ package modelo.game
 import com.google.gson.annotations.Expose
 import modelo.recomendacao.Recomendavel
 import utilitarios.toBRL
-import kotlin.random.Random
 
 class Game(
     @Expose val titulo: String,

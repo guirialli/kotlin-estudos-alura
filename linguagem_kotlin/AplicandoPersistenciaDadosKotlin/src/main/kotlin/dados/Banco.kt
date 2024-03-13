@@ -10,19 +10,7 @@ import javax.persistence.EntityManagerFactory
 import javax.persistence.Persistence
 
 object Banco {
-    fun obterConexao(): Connection?{
-        val dotenv = Dotenv.load()
 
-        return  try{
-            DriverManager.getConnection(
-                dotenv.get("DB_CONNECTION"),
-                dotenv.get("DB_USER"), dotenv.get("DB_PASSWORD")
-                )
-        }catch (e: SQLException){
-            e.printStackTrace()
-            null
-        }
-    }
 fun getEntityManager(): EntityManager{
     val factory: EntityManagerFactory = Persistence.createEntityManagerFactory("alugames")
     return  factory.createEntityManager()
