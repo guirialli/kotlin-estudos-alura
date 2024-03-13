@@ -1,4 +1,4 @@
-package factory
+package modelo.factory
 
 import com.google.gson.Gson
 import modelo.game.Game

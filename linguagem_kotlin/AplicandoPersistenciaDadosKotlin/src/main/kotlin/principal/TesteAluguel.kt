@@ -1,8 +1,8 @@
 package principal
 
 import com.google.gson.GsonBuilder
-import factory.FactoryGame
-import factory.FactoryGamer
+import modelo.factory.FactoryGame
+import modelo.factory.FactoryGamer
 import modelo.planos.PlanoAssinatura
 import modelo.usuario.Gamer
 import utilitarios.toBRL

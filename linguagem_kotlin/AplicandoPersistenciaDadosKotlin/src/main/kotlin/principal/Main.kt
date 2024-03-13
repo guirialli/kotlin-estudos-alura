@@ -1,7 +1,7 @@
 package org.example.principal
 
-import factory.FactoryGame
-import factory.FactoryGamer
+import modelo.factory.FactoryGame
+import modelo.factory.FactoryGamer
 import modelo.game.Game
 import java.util.*
 

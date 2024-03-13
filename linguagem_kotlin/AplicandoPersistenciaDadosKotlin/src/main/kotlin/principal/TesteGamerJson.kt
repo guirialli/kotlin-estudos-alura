@@ -1,6 +1,6 @@
 package principal
 
-import factory.FactoryGamer
+import modelo.factory.FactoryGamer
 
 fun main(){
     val consumo = FactoryGamer.createGameByAPI()
