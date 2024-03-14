@@ -1,5 +1,7 @@
 package org.example.principal
 
+import dados.Banco
+import dados.dao.GamerDAO
 import modelo.usuario.Gamer
 
 fun main() {
@@ -12,7 +14,13 @@ fun main() {
     val gamer2 =
         Gamer("Ash Keshion", "ash.keshion@example.com", "09/03/2004", "ashkeshiom")
 
-    println(gamer1)
-    println(gamer2)
-    println(gamer2.idIterno)
+
+    val manger = Banco.getEntityManager()
+    val gamerDAO = GamerDAO(manger)
+    try{
+        //gamerDAO.add(gamer1)
+        println(gamerDAO.getById(1))
+    }finally {
+        manger.close()
+    }
 }

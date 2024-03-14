@@ -4,23 +4,18 @@ import dados.entity.GameEntity
 import modelo.game.Game
 import javax.persistence.EntityManager
 
-class GamesDAO(val manager: EntityManager) {
-    fun getJogos(): List<Game> {
-
-        val query = manager.createQuery("FROM GameEntity", GameEntity::class.java)
-        return query.resultList.map {
-            Game(
-                titulo = it.titulo, capa = it.capa, descricao = it.descricao, id = it.id, preco = it.preco
-            )
-        }
+class GamesDAO(manager: EntityManager) : DAO<Game, GameEntity>(manager, entityType = GameEntity::class.java) {
+    override fun toEntity(obj: Game): GameEntity {
+        return GameEntity(titulo = obj.titulo, capa = obj.capa, descricao = obj.descricao, preco = obj.preco)
     }
 
-    fun addJogo(jogo: Game) {
-        val jogoEntity =
-            GameEntity(titulo = jogo.titulo, capa = jogo.capa, descricao = jogo.descricao, preco = jogo.preco)
-        manager.transaction.begin()
-        manager.persist(jogoEntity)
-        manager.transaction.commit()
+    override fun toModel(entity: GameEntity): Game {
+        return Game(
+            titulo = entity.titulo,
+            capa = entity.capa,
+            descricao = entity.descricao,
+            id = entity.id,
+            preco = entity.preco
+        )
     }
-
 }
