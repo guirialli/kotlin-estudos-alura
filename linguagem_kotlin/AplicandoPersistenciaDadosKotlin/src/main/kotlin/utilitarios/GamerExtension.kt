@@ -22,6 +22,6 @@ fun Gamer.toEntity(): GamerEntity {
         email = this.email,
         dataNascimento = LocalDate.parse(this.dataNascimento, formatter),
         usuario = this.usuario,
-
+        id = this.id
     )
 }
