@@ -12,7 +12,8 @@ class Gamer(
     var nome: String,
     var email: String,
     var dataNascimento: String? = null,
-    var usuario: String? = null
+    var usuario: String? = null,
+    val id: Int = 1
 ) : Recomendavel {
     var idIterno: String = UUID.randomUUID().toString()
         private set

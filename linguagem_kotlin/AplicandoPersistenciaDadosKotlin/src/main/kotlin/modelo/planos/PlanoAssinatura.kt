@@ -6,10 +6,11 @@ import javax.naming.directory.InvalidAttributesException
 
 class PlanoAssinatura(
     tipo: String,
+    id : Int = 1,
     val desconto: Double,
     val assinatura: Double,
     val jogosIncluidos: Int
-) : Plano(tipo) {
+) : Plano(tipo, id = id) {
 
     init {
         if (desconto < 0 || desconto > 1) {
@@ -24,6 +25,10 @@ class PlanoAssinatura(
 
         return if (jogosIncluidos > totalJogos) 0.0
         else calcularValorDoJogo(aluguel) - (calcularValorDoJogo(aluguel) * desconto)
+    }
+
+    override fun jogosInclusosNoPlano(): Int {
+        return jogosIncluidos
     }
 
     override fun toString(): String {

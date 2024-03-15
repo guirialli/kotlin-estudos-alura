@@ -18,8 +18,10 @@ fun main() {
     val manger = Banco.getEntityManager()
     val gamerDAO = GamerDAO(manger)
     try{
-        //gamerDAO.add(gamer1)
-        println(gamerDAO.getById(1))
+        // gamerDAO.add(gamer2)
+        val gamerDB = gamerDAO.getById(34)
+        println(gamerDB)
+        println(gamerDB?.plano)
     }finally {
         manger.close()
     }
