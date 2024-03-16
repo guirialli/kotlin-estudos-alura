@@ -1,6 +1,6 @@
 package dados.dao
 
-import dados.entity.GameEntity
+import dados.entity.GamerEntity
 import javax.persistence.EntityManager
 
 abstract class DAO<TModel, TEntity>(protected val manager: EntityManager, protected val entityType: Class<TEntity>) {

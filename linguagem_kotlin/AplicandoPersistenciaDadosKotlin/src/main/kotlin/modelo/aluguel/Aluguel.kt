@@ -10,10 +10,10 @@ class Aluguel(
     val jogo: Game,
     val periodo: PeriodoAluguel,
 ) {
-    private val uid: String = UUID.randomUUID().toString()
+    private val id: Int = 1
     val valorFinal: Double = gamer.plano.calcularAluguel(this)
     override fun toString(): String {
-        return "\nAluguel ${uid}:" +
+        return "\nAluguel ${id}:" +
                 "\nJogo: ${jogo.titulo}\n" +
                 "Alugado para: ${gamer.nome}\n" +
                 "$periodo" +
