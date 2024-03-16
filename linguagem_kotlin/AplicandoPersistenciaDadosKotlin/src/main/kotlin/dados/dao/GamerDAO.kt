@@ -25,8 +25,7 @@ class GamerDAO(manager: EntityManager) : DAO<Gamer, GamerEntity>(manager, entity
         }
 
         getPlano.onSuccess {
-            val planoPossibleNull = getPlano.getOrNull()
-            plano = planoPossibleNull?.plano?.toModel() ?: PlanoAvulso()
+            plano = it?.plano?.toModel() ?: PlanoAvulso()
         }
 
         return Gamer(

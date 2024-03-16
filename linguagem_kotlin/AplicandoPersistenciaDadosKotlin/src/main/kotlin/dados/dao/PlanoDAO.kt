@@ -5,34 +5,68 @@ import dados.entity.PlanosGamers
 import modelo.planos.PlanoAssinatura
 import utilitarios.toEntity
 import utilitarios.toModel
-import java.sql.SQLException
 import javax.persistence.EntityManager
+import javax.transaction.Transactional
 
+@Transactional
 class PlanoDAO(manager: EntityManager) : DAO<PlanoAssinatura, PlanoEntity>(manager, PlanoEntity::class.java) {
     override fun toEntity(obj: PlanoAssinatura): PlanoEntity {
         return obj.toEntity()
     }
+
     override fun toModel(entity: PlanoEntity): PlanoAssinatura {
         return entity.toModel()
     }
 
     fun addPlanoGamer(gamerID: Int, planoID: Int) {
-        val gamer = GamerDAO(manager).getById(gamerID)
-        val plano = PlanoDAO(manager).getById(planoID)
+        val sql = """
+        INSERT INTO planos_gamers (gamer_id, plano_id)
+        VALUES (:gamerId, :planoId)
+        """.trimIndent()
 
-        if(gamer == null || plano == null){
-            throw RuntimeException("Gamer, ou, plano invalidos")
-        }
-        try{
+        val query = manager.createNativeQuery(sql)
+        query.setParameter("gamerId", gamerID)
+        query.setParameter("planoId", planoID)
+
+        val addGameInPlano = kotlin.runCatching {
             manager.transaction.begin()
-            manager.persist(PlanosGamers(gamer = gamer.toEntity(), plano = plano.toEntity()))
+            query.executeUpdate()
             manager.transaction.commit()
-        }catch (e: SQLException){
-         println("Gamer já possuí um plano!")
         }
-        catch (e: Exception){
+
+        addGameInPlano.onSuccess {
+            println("Gamer adicionado ao plano!")
+        }
+
+        addGameInPlano.onFailure {
             manager.transaction.rollback()
-            println("Erro desconhecido: $e")
+            println("Erro ao adicionar gamer em plano, verifique se ele já tem um plano!:\n\nErro:${it.message}")
+            it.printStackTrace()
         }
     }
+
+    fun removerGamerPlano(gamerID: Int) {
+        val getPlano = kotlin.runCatching {
+            manager.createQuery("FROM PlanosGamers WHERE gamer.id = :id", PlanosGamers::class.java)
+                .setParameter("id", gamerID).singleResult
+        }
+
+        getPlano.onSuccess {
+            if (it != null){
+                manager.transaction.begin()
+                manager.remove(it)
+                manager.transaction.commit()
+            }
+            else println("Gamer não possui plano!")
+        }
+
+        getPlano.onFailure {
+            println("Erro: Gamer não possuí plano,ou, erro desconhecido: \n${it.message}")
+        }
+    }
+    fun alterarGamerPlano(gamerID: Int, planoID: Int){
+        removerGamerPlano(gamerID)
+        addPlanoGamer(gamerID, planoID)
+    }
+
 }

@@ -10,7 +10,10 @@ fun main(){
     val planoDAO = PlanoDAO(manager)
     try{
         //planoDAO.add(plano)
-        planoDAO.addPlanoGamer(34,1)
+        //planoDAO.addPlanoGamer(34,1)
+        //planoDAO.removerGamerPlano(34)
+        planoDAO.alterarGamerPlano(34, 1)
+
         println(planoDAO.getLista())
     }finally {
         manager.close()
