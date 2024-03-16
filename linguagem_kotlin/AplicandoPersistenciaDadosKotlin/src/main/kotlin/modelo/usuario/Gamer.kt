@@ -13,13 +13,14 @@ class Gamer(
     var email: String,
     var dataNascimento: String? = null,
     var usuario: String? = null,
-    val id: Int = 1
+    val id: Int = 1,
+    var plano : Plano = PlanoAvulso()
 ) : Recomendavel {
     var idIterno: String = UUID.randomUUID().toString()
         private set
     val gamesSearched: MutableList<Game?> = mutableListOf()
     val listDeAlugueis: MutableList<Aluguel?> = mutableListOf()
-    var plano : Plano = PlanoAvulso()
+
     private var listaNotas = mutableListOf<Int>()
     val jogosRecomendados: MutableList<Game> = mutableListOf()
 
